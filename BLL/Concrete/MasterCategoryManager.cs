@@ -65,7 +65,6 @@ namespace BLL.Concrete
             }
             catch (Exception ex)
             {
-
                 return new ResultService(ex.Innest().Message, ResultType.Error);
             }
         }
@@ -116,7 +115,6 @@ namespace BLL.Concrete
             }
             catch (Exception ex)
             {
-
                 return new ResultService<MasterCategory>(null, ex.Innest().Message, ResultType.Error);
             }
         }
@@ -134,7 +132,6 @@ namespace BLL.Concrete
             }
             catch (Exception ex)
             {
-
                 return new ResultService<List<MasterCategory>>(null, ex.Innest().Message, ResultType.Error);
             }
         }

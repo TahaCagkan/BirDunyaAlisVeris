@@ -33,7 +33,8 @@ namespace DAL.Concrete
             entity.GetType().GetProperty("Active").SetValue(entity, false);
             entity.GetType().GetProperty("Delete").SetValue(entity, true);
             context.Entry(entity).State = EntityState.Modified;
-            return true;
+            //return true;
+            return await Commit();
 
         }
 
@@ -55,7 +56,7 @@ namespace DAL.Concrete
             IQueryable<TEntity> result;
             if(filter != null)
             {
-                //sorguyu olusturduk
+                //sorguyu olusturduk,filter var ise
                 result = context.Set<TEntity>().Where(filter);
             }
             else
@@ -67,7 +68,7 @@ namespace DAL.Concrete
             {
                 foreach (var item in includeItems)
                 {
-                    result.Include(item);
+                    result = result.Include(item);
                 }
             }
             return Task.FromResult(result);

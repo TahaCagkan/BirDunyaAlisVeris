@@ -14,8 +14,8 @@ namespace Core.BLL.ResultBusiness
     }
     public class ResultService
     {
-        private readonly string message;
-        private readonly ResultType resultType;
+        public readonly string message;
+        public readonly ResultType resultType;
         public ResultService(string message="Success", ResultType resultType= ResultType.Success)
         {
             this.message = message;
@@ -24,7 +24,7 @@ namespace Core.BLL.ResultBusiness
     }
     public class ResultService<T>: ResultService
     {
-        private readonly T data;
+        public readonly T data;
         //bagımlılıklarımızı kontrol etmek icin base ctordan kalıtıldı,mesaj ve resutl degerine göre,true false yerine Success gitsin gibi
         public ResultService(T data, string message = "Success", ResultType resultType = ResultType.Success):base(message,resultType)
         {

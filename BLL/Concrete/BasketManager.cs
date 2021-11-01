@@ -22,6 +22,7 @@ namespace BLL.Concrete
             this.db = db;
             this.loggerDAL = loggerDAL;
         }
+        //her ürünü eklemeden kullanici o ürünü eklemis mi eklememis mi
         public ResultService<Basket> InsertBasket(Basket entity)
         {
             Basket basket = null;

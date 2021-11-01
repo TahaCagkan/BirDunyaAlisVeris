@@ -11,5 +11,6 @@ namespace Entity.POCO
         public string LastName { get; set; }
         public virtual List<Basket> Basket { get; set; }
         public virtual List<DatabaseLogger> DatabaseLogger { get; set; }
+
     }
 }

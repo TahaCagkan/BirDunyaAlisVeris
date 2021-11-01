@@ -10,8 +10,8 @@ namespace Core.BLL.InnerException
         public static Exception Innest(this Exception ex)
         {
             if (ex.InnerException != null)
-            {
-                //recursive method gelen hatayi bulundu
+            { 
+                //recursive method ile en alt katmandan gelen hatayi bulundu
                 return ex.InnerException.Innest();
             }
             return ex;

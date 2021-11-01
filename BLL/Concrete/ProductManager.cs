@@ -1,6 +1,7 @@
 ﻿using BLL.Abstract;
 using Core.BLL.InnerException;
 using Core.BLL.ResultBusiness;
+using Core.DTOs;
 using Core.Entity;
 using DAL.Abstract;
 using DAL.Concrete;
@@ -19,12 +20,13 @@ namespace BLL.Concrete
         //IProductDAL kullanildi icerisinde IGenericRepository bulunmakta bu sayede GenericRepository ulasabilecegim
         private readonly IProductDAL db;
         private readonly IDatabaseLoggerDAL loggerDAL;
-
+        //DB ve LOG 
         public ProductManager(IProductDAL db,IDatabaseLoggerDAL loggerDAL)
         {
             this.db = db;
             this.loggerDAL = loggerDAL;
         }
+        //Ekleme isleminde Log da ekle
         public ResultService<Product> AddProduct(Product product, string[] imageUrl, object user, params int[] categories)
         {
             Product result = null;
@@ -53,8 +55,7 @@ namespace BLL.Concrete
         {
             try
             {
-                if (
-                db.Insert(entity).Result)
+                if (db.Insert(entity).Result)
                 {
                     return new ResultService();
                 }
@@ -73,7 +74,6 @@ namespace BLL.Concrete
                 //}
                 //return new ResultService(ex.Innest().Message, ResultType.Error);
                 return new ResultService(ResultMessage.ResultErrorMessage(e.Message), ResultType.Error);
-
             }
         }
 
@@ -92,7 +92,6 @@ namespace BLL.Concrete
             }
             catch (Exception ex)
             {
-
                 return new ResultService(ex.Innest().Message,ResultType.Error);
             }
         }
@@ -126,8 +125,7 @@ namespace BLL.Concrete
             }
             catch (Exception ex)
             {
-                return new ResultService<Product>(null, ex.Innest().Message, ResultType.Error);
-                
+                return new ResultService<Product>(null, ex.Innest().Message, ResultType.Error);              
             }
         }
 
@@ -144,7 +142,6 @@ namespace BLL.Concrete
             }
             catch (Exception ex)
             {
-
                 return new ResultService<Product>(null,ex.Innest().Message,ResultType.Error);
             }
         }
@@ -162,10 +159,32 @@ namespace BLL.Concrete
             }
             catch (Exception ex)
             {
-
                 return new ResultService<List<Product>>(null, ex.Innest().Message, ResultType.Error);
             }
         }
 
+        public ResultService<List<ProductDTO>> GetCategoryById(int id, int take, int skip)
+        {
+            try
+            {
+                //int take,int skip pagination icin yapildi
+                var result = db.GetCategoryById(id,take,skip).Result;
+                if(result != null)
+                {
+                    return new ResultService<List<ProductDTO>>(result);
+                }
+                return new ResultService<List<ProductDTO>>(null);
+            }
+            catch (Exception ex)
+            {
+               return new ResultService<List<ProductDTO>>(null,ex.Innest().Message,ResultType.Error);
+            }
+        }
+
+        public ResultService<int> ProductCategoryCount(int categoryId)
+        {
+            var result = db.ProductCategoryCount(categoryId).Result;
+            return new ResultService<int>(result);
+        }
     }
 }

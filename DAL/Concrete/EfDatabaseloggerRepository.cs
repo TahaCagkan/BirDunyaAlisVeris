@@ -18,7 +18,7 @@ namespace DAL.Concrete
         {
             this.db = db;
         }
-
+        //DB ye log ekleme
         public bool Add(string desc, object user, LogType logType)
         {
             AppUser appUser;
@@ -35,6 +35,7 @@ namespace DAL.Concrete
             }
             return false;
         }
+        //top 10 listele
         public List<DatabaseLogger> DataListlog(Expression<Func<DatabaseLogger, bool>> filter, int top =10)
         {
             return db.DatabaseLogger.Where(filter).Take(top).ToList();

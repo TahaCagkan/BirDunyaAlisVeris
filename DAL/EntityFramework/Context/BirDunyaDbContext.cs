@@ -20,19 +20,18 @@ namespace DAL.EntityFramework.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //model icersinde tum type lari cek,key leri al
             foreach (var item in modelBuilder.Model
                 .GetEntityTypes()
                 .SelectMany(x => x.GetForeignKeys()))
             {
-                //foreign key iliskiler silinmez
+                //foreign key olan iliskiler silinmez
                 item.DeleteBehavior = DeleteBehavior.Restrict;
             }
-
+            //ProductCategory class'in da composite key var
             modelBuilder.Entity<ProductCategory>().HasKey(x => new {x.CategoryId, x.ProductId });
-            modelBuilder.Entity<AppRole>().HasData
-                (
-                    new AppRole {Name="Admin", NormalizedName="ADMIN",Id=1 }
-                );
+            modelBuilder.Entity<AppRole>().HasData(new AppRole {Name="Admin", NormalizedName="ADMIN",Id=1 });
+            modelBuilder.Entity<AppRole>().HasData(new AppRole { Name = "User", NormalizedName = "USER", Id = 2 });
             modelBuilder.ApplyConfiguration(new ProductMap());
             base.OnModelCreating(modelBuilder);
         }
